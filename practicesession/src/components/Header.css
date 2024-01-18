@@ -1,0 +1,17 @@
+header {
+  text-align: center;
+}
+
+.headerTitle {
+  color: #1D1927;
+  text-align: center;
+  font-family: Inter;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+hr {
+  margin-top: 1.38rem;
+}
