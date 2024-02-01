@@ -11,27 +11,30 @@ function App() {
   //   background: ${(props) => props.bg};
   //   cursor: pointer;
   // `;
-  const [list, setList] = useState([]);
+  const [list, setList] = useState([]); // 목록 배열 생성
 
-  function updateList(itemId, newContent) {
+  // 목록 입력 함수 => 
+  function updateList(itemId, newContent) { 
     setList((prevList) =>
       prevList.map((item) =>
-        item.id === itemId ? { ...item, content: newContent } : item
+        item.id === itemId ? { ...item, content: newContent } : item // map 함수를 통해 id 값이 같은 곳에 새로운 할 일 내용 초기화 
       )
     );
   }
 
+  // 목록 추가
   function addList() {
-    const newItem = {
-      id: Date.now(),
-      content: "",
+    const newItem = { // 목록 객체 생성
+      id: Date.now(), // 고유한 id 값
+      content: "", // 내용
     };
-    setList((prevList) => [...prevList, newItem]);
+    setList((prevList) => [...prevList, newItem]); // 목록 추가
   }
 
+  // 삭제 함수
   function deleteList(itemId) {
     setList((prevList) => {
-      return prevList.filter((item) => item.id !== itemId);
+      return prevList.filter((item) => item.id !== itemId); // 삭제하고 싶은 id 값을 입력 받아서 해당 id 값이 아닌 요소들을 리턴
     });
   }
 

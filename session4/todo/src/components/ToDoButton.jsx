@@ -3,12 +3,12 @@ import deleteImg from "../images/Group 170.svg";
 
 
 export default function ToDoButton({ item, updateContent, deleteList }) {
-  const [userInput, setUserInput] = useState(item.content);
+  const [userInput, setUserInput] = useState(item.content); // 보여지는 할 일 목록 내용 초기화
 
-  function inputChangeHandler(event) {
-    const newContent = event.target.value;
-    setUserInput(newContent);
-    updateContent(item.id, newContent);
+  function inputChangeHandler(event) { // 입력이 발생하면
+    const newContent = event.target.value; // 입력 들어온 값은 새로운 할 일 목록
+    setUserInput(newContent); // 화면에 새로운 내용 보여주기
+    updateContent(item.id, newContent); // updateContent에 해당 입력 받은 내용과 id값 인자로 넘기기
   }
 
   return (
