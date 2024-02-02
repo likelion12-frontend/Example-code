@@ -55,55 +55,14 @@ nav{
     margin-right: 0%;
 }
 
-/* 배너, 검색바 */
+/* 배너 */
 .sec1{
     width: 100vw;
     height: 45vh;
     position: relative;
-}
-.sec1 > div{
-    height: 100%;
     background: url(./image/main.png) no-repeat 50% 50% /cover;
 }
 
-form{
-    display: flex;
-    flex-direction: row;
-    min-width: 25rem;
-    width: 40%;
-    height: 2.5rem;
-    position: absolute;
-    top: 65%;
-    left: 20%;
-    background-color: white;
-    border-radius: 25px;
-    padding: 0.2rem;
-}
-form > input{
-    flex-grow: 4;
-    padding-left: 20px;
-    padding-right: 20px;
-    border: none;
-    background-color: transparent;
-    font-size: 1.25rem; /*20px*/
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    outline: none;
-}
-form > button{
-    flex-grow: 1;
-    background-color: green;
-    color: white;
-    border: 0;
-    border-radius: 25px;
-    font-size: 1.25rem; /*20px*/
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
-    text-align: center;
-}
-form > button:hover{
-    cursor: pointer;
-}
 /* 메뉴 소개 */
 .sec2 {
     display: flex;

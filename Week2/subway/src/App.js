@@ -1,5 +1,8 @@
 import Header from './components/Header';
 import Nav from './components/Nav';
+import MainSection from './components/MainSection';
+import MenuSection from './components/MenuSection';
+
 
 function App() {
 
@@ -12,6 +15,12 @@ function App() {
       <nav >
         <Nav/>
       </nav>
+      <section>
+        <MainSection/>
+      </section>
+      <section>
+        <MenuSection/>
+      </section>
     </>
   );
 }
