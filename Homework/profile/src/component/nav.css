@@ -1,0 +1,28 @@
+.navBox {
+  /* position: absolute;
+  top: 0; */
+  display: flex;
+  /* gap: 5rem; */
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+.homeImg {
+  /* margin-left: 12rem; */
+  cursor: pointer;
+}
+
+.liBox {
+  /* position: relative; */
+  display: flex;
+  gap: 2rem;
+  /* margin-right: 15rem; */
+}
+.liBox li {
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: black;
+  cursor: pointer;
+}
