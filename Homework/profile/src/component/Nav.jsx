@@ -11,12 +11,14 @@ export default function NavBar() {
   
   return (
     <div className="navBox">
-      <img src={homeImg} alt="homImg" className="homeImg" onClick={handleGoHome} />
-      <ul type="none" className="liBox">
-        <li>ABOUT</li>
-        <li>GOAL</li>
-        <li>CONTACT</li>
-      </ul>
+      <div className="navContainer">
+        <img src={homeImg} alt="homImg" className="homeImg" onClick={handleGoHome} />
+        <ul type="none" className="liBox">
+          <li>ABOUT</li>
+          <li>GOAL</li>
+          <li>CONTACT</li>
+        </ul>
+      </div>
     </div>  
   )
 }

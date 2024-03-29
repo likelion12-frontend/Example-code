@@ -12,8 +12,8 @@ const IntroductionContainer = styled.div`
 const IntroductionText = styled.p`
   color: white;
   font-weight: 800;
-  font-size: 3rem;
-  line-height: 5rem;
+  font-size: 5vw;
+  line-height: 150%;
 `
 
 const BolodText = styled.span`
