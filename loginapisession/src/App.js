@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Signup from './signup/Signup';
 import Signin from './signin/Signin';
 import LoginMain from './main/loginmain';
-
+import Change from './change/Change';
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -27,6 +27,7 @@ function App() {
           <Route path="/Signup" element={<Signup />} />
           <Route path="/Signin" element={<Signin />} />
           <Route path="/LoginMain" element={<LoginMain />} />
+          <Route path="/Change" element={<Change />} />
         </Routes>
       </Wrapper>
     </Router>

@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import React from 'react';
 import Bugi from '../images/Bugi.png';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 export const PContainer = styled.div`
   margin-top: 22px;
@@ -71,21 +73,72 @@ const JoinBtn = styled.button`
   transition: opacity 300ms ease-in-out;
 `;
 
+const CancelBtn = styled.button`
+  width: 352px;
+  height: 57px;
+  border-radius: 10px;
+  background: #da0000;
+  color: #fff;
+  text-align: center;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  transition: opacity 300ms ease-in-out;
+`;
+
 function LoginMain() {
   const navigate = useNavigate();
+  const [userId, setUserId] = useState('');
 
   const MoveSignup = () => {
     navigate('/Signup');
   };
 
-  const MoveSignin = () => {
-    navigate('/Signin');
+  const MoveChange = () => {
+    navigate('/Change');
   };
+
+  const Withdraw = async () => {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8080/api/member/withdraw/${userId}`,
+        {
+          method: 'DELETE',
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('회원탈퇴 요청 실패');
+      }
+
+      const result = await response.json();
+      console.log(response.status);
+      if (result.status === 200) {
+        alert('회원탈퇴가 완료되었습니다.');
+        sessionStorage.removeItem('userId');
+        navigate('/');
+      } else {
+        alert(result.message || '회원탈퇴 중 오류가 발생했습니다.');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      alert('회원탈퇴 처리 중 문제가 발생했습니다.');
+    }
+  };
+
+  useEffect(() => {
+    const storedUserId = sessionStorage.getItem('userId');
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
+  }, []);
 
   return (
     <>
       <PContainer>
-        <MainP>회원가입 & 로그인 연습 홈페이지</MainP>
+        <MainP>{userId ? `${userId}님 환영합니다.` : null}</MainP>
       </PContainer>
       <MainLine />
       <ImgContainer>
@@ -96,8 +149,9 @@ function LoginMain() {
         />
       </ImgContainer>
       <ButtonContainer>
-        <LoginBtn onClick={MoveSignin}>로그인</LoginBtn>
-        <JoinBtn onClick={MoveSignup}>회원가입</JoinBtn>
+        <LoginBtn onClick={MoveChange}>비밀번호 변경</LoginBtn>
+        <JoinBtn onClick={MoveSignup}>로그아웃</JoinBtn>
+        <CancelBtn onClick={Withdraw}>회원탈퇴</CancelBtn>
       </ButtonContainer>
     </>
   );

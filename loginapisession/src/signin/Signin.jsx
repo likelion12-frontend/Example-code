@@ -6,6 +6,7 @@ import { MainP } from '../main/main';
 import { MainLine } from '../main/main';
 import Bugi from '../images/Bugi.png';
 import { ImgContainer } from '../main/main';
+import { useEffect } from 'react';
 
 const AllContainer = styled.div`
   display: flex;
@@ -62,6 +63,13 @@ function Signin() {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUserId = sessionStorage.getItem('userId');
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
+  }, []);
 
   const handleLogin = async () => {
     try {
