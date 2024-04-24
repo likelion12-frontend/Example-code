@@ -71,7 +71,7 @@ const JoinBtn = styled.button`
   transition: opacity 300ms ease-in-out;
 `;
 
-function Main() {
+function LoginMain() {
   const navigate = useNavigate();
 
   const MoveSignup = () => {
@@ -103,4 +103,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default LoginMain;

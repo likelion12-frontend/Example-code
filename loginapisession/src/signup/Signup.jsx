@@ -11,7 +11,6 @@ const AllContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 34px;
   position: relative;
 `;
 const Textfield = styled.input`
@@ -313,6 +312,10 @@ function Signup() {
   return (
     <>
       <AllContainer>
+        <PContainer>
+          <MainP>회원가입</MainP>
+        </PContainer>
+        <MainLine />
         <FieldWithMessage>
           <PWfield
             placeholder="이메일 ex) abc123@naver.com"
