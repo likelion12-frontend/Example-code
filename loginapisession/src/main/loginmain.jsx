@@ -92,8 +92,9 @@ function LoginMain() {
   const navigate = useNavigate();
   const [userId, setUserId] = useState('');
 
-  const MoveSignup = () => {
-    navigate('/Signup');
+  const Logout = () => {
+    sessionStorage.removeItem('userId');
+    navigate('/');
   };
 
   const MoveChange = () => {
@@ -103,7 +104,7 @@ function LoginMain() {
   const Withdraw = async () => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8080/api/member/withdraw/${userId}`,
+        `http://127.0.0.1:8080/api/member/${userId}`,
         {
           method: 'DELETE',
         }
@@ -150,7 +151,7 @@ function LoginMain() {
       </ImgContainer>
       <ButtonContainer>
         <LoginBtn onClick={MoveChange}>비밀번호 변경</LoginBtn>
-        <JoinBtn onClick={MoveSignup}>로그아웃</JoinBtn>
+        <JoinBtn onClick={Logout}>로그아웃</JoinBtn>
         <CancelBtn onClick={Withdraw}>회원탈퇴</CancelBtn>
       </ButtonContainer>
     </>
