@@ -159,12 +159,12 @@ function Signup() {
         body: JSON.stringify({
           userId: userId,
           password: password,
-          phone: tell, // tell 변수를 phone으로 변경하여 보냅니다.
+          phone: tell,
           email: email,
         }),
       });
 
-      console.log(`Status: ${response.status}`); // 콘솔에 상태 코드 출력
+      console.log(`Status: ${response.status}`);
 
       if (!response.ok) {
         throw new Error('회원가입에 실패했습니다.');
@@ -179,32 +179,31 @@ function Signup() {
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
-    setEmailStatus(null); // Reset status code on change
+    setEmailStatus(null);
   };
 
   const handleUserIdChange = (event) => {
     setUserId(event.target.value);
-    setUserIdStatus(null); // Reset status code on change
+    setUserIdStatus(null);
   };
 
   const handleTellChange = (event) => {
     setTell(event.target.value);
-    setTellStatus(null); // Reset status code on change
+    setTellStatus(null);
   };
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
-    if (!passwordTouched) setPasswordTouched(true); // 사용자가 입력을 시작하면 touched 상태를 true로 설정
+    if (!passwordTouched) setPasswordTouched(true);
   };
 
   const handlePasswordConfirmChange = (event) => {
     setPasswordConfirm(event.target.value);
-    if (!passwordConfirmTouched) setPasswordConfirmTouched(true); // 사용자가 입력을 시작하면 touched 상태를 true로 설정
+    if (!passwordConfirmTouched) setPasswordConfirmTouched(true);
   };
 
-  // 비밀번호 유효성 검사: 비밀번호가 4글자 이상인지 확인
   const isValidPassword = password.length >= 4;
-  // 비밀번호 일치 검사: 입력된 비밀번호와 비밀번호 확인이 같은지 확인
+
   const passwordsMatch = password === passwordConfirm && isValidPassword;
 
   useEffect(() => {
@@ -289,7 +288,6 @@ function Signup() {
     }
   }
 
-  // Configure styles and borderColor based on validation status
   const emailBorderColor =
     emailStatus === 200
       ? '#0028da'
@@ -392,7 +390,6 @@ function Signup() {
             type="password"
             value={passwordConfirm}
             onChange={handlePasswordConfirmChange}
-            // 조건부 스타일 적용: 비밀번호 일치 검사 결과에 따라 색상 변경
             style={{
               borderColor: passwordConfirmTouched
                 ? passwordsMatch
