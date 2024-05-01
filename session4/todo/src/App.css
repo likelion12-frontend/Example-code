@@ -49,6 +49,7 @@
 }
 
 .buttonBox {
+  margin-top: 2rem;;
   display: flex;
   gap: 2rem;
 }
@@ -82,7 +83,8 @@
 
 .toDoList .select:checked {
   border-radius: 10px;
-  background: var(--1, linear-gradient(180deg, #FF9F9F 0%, #FFBFBF 100%));
+  /* background: var(--1, linear-gradient(180deg, #FF9F9F 0%, #FFBFBF 100%)); */
+  background: skyblue;
   box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.15) inset;
 }
 
