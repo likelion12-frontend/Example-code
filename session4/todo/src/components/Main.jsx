@@ -1,9 +1,9 @@
-import styled from "styled-components";
 import "../App.css";
 import ToDoButton from "./ToDoButton.jsx";
-import { useState } from "react";
 
-function App() {
+import {useNavigate} from "react-router-dom";
+
+function Main({list, addList, updateList, deleteList, saveContent}) {
   // let Btn = styled.button`
   //   margin-top: 2rem;
   //   border: none;
@@ -11,36 +11,11 @@ function App() {
   //   background: ${(props) => props.bg};
   //   cursor: pointer;
   // `;
-  const [list, setList] = useState([]); // 목록 배열 생성
-
-  // 목록 입력 함수 => 
-  function updateList(itemId, newContent) { 
-    setList((prevList) =>
-      prevList.map((item) =>
-        item.id === itemId ? { ...item, content: newContent } : item // map 함수를 통해 id 값이 같은 곳에 새로운 할 일 내용 초기화 
-      )
-    );
-  }
-
-  // 목록 추가
-  function addList() {
-    const newItem = { // 목록 객체 생성
-      id: Date.now(), // 고유한 id 값
-      content: "", // 내용
-    };
-    setList((prevList) => [...prevList, newItem]); // 목록 추가
-  }
-
-  // 삭제 함수
-  function deleteList(itemId) {
-    setList((prevList) => {
-      return prevList.filter((item) => item.id !== itemId); // 삭제하고 싶은 id 값을 입력 받아서 해당 id 값이 아닌 요소들을 리턴
-    });
-  }
+  const navigate = useNavigate();
 
   // 보관함 이동 함수 
   function completeList() {
-
+    navigate('/Storage');
   }
 
   return (
@@ -53,7 +28,7 @@ function App() {
         <button className="plusButton" onClick={addList}>
           Plus
         </button>
-        <button className="plusButton" onClick={addList}>
+        <button className="plusButton" onClick={completeList}>
           보관함
         </button>
       </div>
@@ -64,6 +39,7 @@ function App() {
             item={item}
             updateContent={updateList}
             deleteList={() => deleteList(item.id)}
+            saveContent={saveContent}
           />
         );
       })}
@@ -71,4 +47,4 @@ function App() {
   );
 }
 
-export default App;
+export default Main;
