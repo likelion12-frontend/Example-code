@@ -3,7 +3,7 @@ import ToDoButton from "./ToDoButton.jsx";
 
 import {useNavigate} from "react-router-dom";
 
-function Main({list, addList, updateList, deleteList, saveContent}) {
+function Main({list, addList, updateList, deleteList, saveContent, toggleCheck}) {
   // let Btn = styled.button`
   //   margin-top: 2rem;
   //   border: none;
@@ -40,6 +40,7 @@ function Main({list, addList, updateList, deleteList, saveContent}) {
             updateContent={updateList}
             deleteList={() => deleteList(item.id)}
             saveContent={saveContent}
+            toggleCheck={() => toggleCheck(item.id)}
           />
         );
       })}

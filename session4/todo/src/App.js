@@ -21,6 +21,7 @@ function App() {
     const newItem = { // 목록 객체 생성
       id: Date.now(), // 고유한 id 값
       content: "", // 내용
+      isChecked: false //체크 상태 추가
     };
     setList((prevList) => [...prevList, newItem]); // 목록 추가
   }
@@ -40,9 +41,17 @@ function App() {
     }
   }
 
+  function handleToggleCheck(itemId) {
+    setList((prevList) => {
+      return prevList.map((item) => {
+        return item.id === itemId ? {...item, isChecked: !item.isChecked} : item;
+      })
+    })
+  }
+
   return (
     <Routes>
-      <Route path="/" element={<Main updateList={updateList} addList={addList} list={list} deleteList={deleteList} saveContent={saveContent} />}></Route>
+      <Route path="/" element={<Main updateList={updateList} addList={addList} list={list} deleteList={deleteList} saveContent={saveContent} toggleCheck={handleToggleCheck} />}></Route>
       <Route path="/Storage" element={<Storage list={storgaeList} />} />
     </Routes>
   );
