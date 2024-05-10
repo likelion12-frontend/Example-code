@@ -22,7 +22,7 @@ export default function ToDoButton({item, updateContent, deleteList, saveContent
   // }
 
   const handleCheckbox = () => {
-    const currentState = !item.isCheked;
+    const currentState = !item.isChecked;
     toggleCheck();
     if(currentState) {
       if(window.confirm("보관함으로 이동시키겠습니까?")) {
@@ -33,7 +33,7 @@ export default function ToDoButton({item, updateContent, deleteList, saveContent
 
   return (
     <div className="toDoList">
-      <input type="checkbox" className="select" onChange={handleCheckbox} checked={item.isCheked}></input>
+      <input type="checkbox" className="select" onChange={handleCheckbox} checked={item.isChecked}></input>
       <input type="text" className="field" placeholder="내용을 입력해주세요" value={userInput} onChange={inputChangeHandler}></input>
       <button className="minusButton" onClick={deleteList}>
         <img src={deleteImg} alt="삭제 이미지"></img>
