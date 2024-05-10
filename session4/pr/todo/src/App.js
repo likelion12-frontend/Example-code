@@ -1,15 +1,18 @@
 import { useState } from "react";
 import Main from "./components/Main";
 import {Routes, Route} from "react-router-dom";
+import Storage from "./components/Storage";
 
 function App() {
   const [list, setList] = useState([]); // 목록 배열 생성
+  const [storgaeList, setStorgaeList] = useState([]);
 
   // 목록 추가 함수
   function addList() {
     const newItem = { // 목록 객체 생성
       id: Date.now(), // 고유한 id 값
       content: "", // 내용
+      isCheked: false // 체크 상태 추가
     };
     setList((prevList) => [...prevList, newItem]);
   }
@@ -30,9 +33,26 @@ function App() {
     })
   }
 
+  const saveContent = (itemId) => {
+    const checkList = list.find(item => item.id === itemId);
+    if(checkList) {
+      setStorgaeList((prev) => [...prev, checkList]);
+      deleteList(itemId);
+    }
+  }
+
+  function handleToggleCheck(itemId) {
+    setList((prevList) => {
+      return prevList.map((item) => {
+        return item.id === itemId ? {...item, isChecked: !item.isChecked} : item;
+      })
+    })
+  }
+
   return (
     <Routes>
-      <Route path="/" element={<Main list={list} addList={addList} updateList={upadateList} deleteList={deleteList} />}></Route>
+      <Route path="/" element={<Main list={list} addList={addList} updateList={upadateList} deleteList={deleteList} saveContent={saveContent} toggleCheck={handleToggleCheck} />}></Route>
+      <Route path="/storage" element={<Storage list={storgaeList} />} />
     </Routes>
   )
 }
