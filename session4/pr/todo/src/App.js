@@ -12,7 +12,7 @@ function App() {
     const newItem = { // 목록 객체 생성
       id: Date.now(), // 고유한 id 값
       content: "", // 내용
-      isCheked: false // 체크 상태 추가
+      isChecked: false // 체크 상태 추가
     };
     setList((prevList) => [...prevList, newItem]);
   }
