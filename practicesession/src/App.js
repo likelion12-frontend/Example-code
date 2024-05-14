@@ -1,19 +1,12 @@
-import { Routes, Route } from 'react-router-dom';
-import './App.css';
-import MainPage from './pages/MainPage';
-import Join from './pages/Join';
-
-
+import { GlobalStyle } from "./style/globalStyle";
+import {Router} from "react-router-dom";
 
 function App() {
   
   return (
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/회원가입" element={<Join></Join>}/>
-      </Routes>
-    </div>
+    <Router>
+      <GlobalStyle />
+    </Router>
   );
 }
 
