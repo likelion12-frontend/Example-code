@@ -143,18 +143,22 @@ function Signup() {
   const handleRegister = async () => {
     try {
       // 서버에 회원가입 정보를 보내는 HTTP POST 요청을 보냅니다.
-      const response = await fetch('http://127.0.0.1:8080/api/member/sign-up', {
-        method: 'POST', // HTTP 메소드를 POST로 설정하여 서버에 데이터를 전송합니다.
-        headers: {
-          'Content-Type': 'application/json', // 요청 본문의 형식이 JSON임을 서버에 알립니다.
-        },
-        body: JSON.stringify({
-          email: email, // 사용자의 이메일
-          userId: userId, // 사용자의 아이디
-          phone: phone, // 사용자의 전화번호
-          password: password, // 사용자의 비밀번호
-        }), // JavaScript 객체를 JSON 문자열로 변환하여 서버에 전송합니다.
-      });
+
+      const response = await fetch(
+        'http://52.78.139.114:8081/api/member/sign-up',
+        {
+          method: 'POST', // HTTP 메소드를 POST로 설정하여 서버에 데이터를 전송합니다.
+          headers: {
+            'Content-Type': 'application/json', // 요청 본문의 형식이 JSON임을 서버에 알립니다.
+          },
+          body: JSON.stringify({
+            email: email, // 사용자의 이메일
+            userId: userId, // 사용자의 아이디
+            phone: phone, // 사용자의 전화번호
+            password: password, // 사용자의 비밀번호
+          }), // JavaScript 객체를 JSON 문자열로 변환하여 서버에 전송합니다.
+        }
+      );
 
       // 요청에 대한 서버의 응답을 로깅합니다.
       console.log(`Status: ${response.status}`); // 서버로부터 받은 응답의 HTTP 상태 코드를 콘솔에 출력합니다.
