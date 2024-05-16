@@ -101,34 +101,33 @@ function LoginMain() {
     navigate('/Change');
   };
 
-  //탈퇴
-  // const Withdraw = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       `http://127.0.0.1:8080/api/member/${userId}`,
-  //       {
-  //         method: 'DELETE',
-  //       }
-  //     );
+  const Withdraw = async () => {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8080/api/member/${userId}`,
+        {
+          method: 'DELETE',
+        }
+      );
 
-  //     if (!response.ok) {
-  //       throw new Error('회원탈퇴 요청 실패');
-  //     }
+      if (!response.ok) {
+        throw new Error('회원탈퇴 요청 실패');
+      }
 
-  //     const result = await response.json();
-  //     console.log(response.status);
-  //     if (result.status === 200) {
-  //       alert('회원탈퇴가 완료되었습니다.');
-  //       sessionStorage.removeItem('userId');
-  //       navigate('/');
-  //     } else {
-  //       alert(result.message || '회원탈퇴 중 오류가 발생했습니다.');
-  //     }
-  //   } catch (err) {
-  //     console.error('Error:', err);
-  //     alert('회원탈퇴 처리 중 문제가 발생했습니다.');
-  //   }
-  // };
+      const result = await response.json();
+      console.log(response.status);
+      if (result.status === 200) {
+        alert('회원탈퇴가 완료되었습니다.');
+        sessionStorage.removeItem('userId');
+        navigate('/');
+      } else {
+        alert(result.message || '회원탈퇴 중 오류가 발생했습니다.');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      alert('회원탈퇴 처리 중 문제가 발생했습니다.');
+    }
+  };
 
   useEffect(() => {
     const storedUserId = sessionStorage.getItem('userId');
@@ -153,7 +152,7 @@ function LoginMain() {
       <ButtonContainer>
         <LoginBtn onClick={MoveChange}>비밀번호 변경</LoginBtn>
         <JoinBtn onClick={Logout}>로그아웃</JoinBtn>
-        {/* <CancelBtn onClick={Withdraw}>회원탈퇴</CancelBtn> */}
+        <CancelBtn onClick={Withdraw}>회원탈퇴</CancelBtn>
       </ButtonContainer>
     </>
   );
