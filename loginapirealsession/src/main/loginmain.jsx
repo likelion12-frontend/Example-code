@@ -101,10 +101,11 @@ function LoginMain() {
     navigate('/Change');
   };
 
+
   const Withdraw = async () => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8080/api/member/${userId}`,
+        `${API.baseURL}/api/member/${userId}`,
         {
           method: 'DELETE',
         }
@@ -114,18 +115,17 @@ function LoginMain() {
         throw new Error('회원탈퇴 요청 실패');
       }
 
-      const result = await response.json();
-      console.log(response.status);
-      if (result.status === 200) {
-        alert('회원탈퇴가 완료되었습니다.');
-        sessionStorage.removeItem('userId');
-        navigate('/');
+      const data = await response.json();
+      console.log(data);
+
+      if (response.status === 200) {
+        alert('회원 탈퇴가 완료되었습니다.');
+        navigate('/loginMain');
       } else {
-        alert(result.message || '회원탈퇴 중 오류가 발생했습니다.');
+        alert('회원 탈퇴에 실패하였습니다.');
       }
-    } catch (err) {
-      console.error('Error:', err);
-      alert('회원탈퇴 처리 중 문제가 발생했습니다.');
+    } catch (error) {
+      alert('에러가 났습니다.');
     }
   };
 
