@@ -132,12 +132,48 @@ const Message = styled.p`
 
 function Signup() {
   const [email, setEmail] = useState('');
+
+  const [emailTimeout, setEmailTimeout] = useState(null);
+  const [emailValid, setEmailValid] = useState(true);
+  const [emailValidationMessage, setEmailValidationMessage] = useState('');
+
   const [userId, setUserId] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
   const navigate = useNavigate();
+
+  const checkEmailDuplication = (email) => {
+    if (emailTimeout) clearTimeout(emailTimeout); // 이전 타임아웃을 클리어합니다.
+
+    const newTimeout = setTimeout(async () => {
+      try {
+        const response = await fetch(
+          `${API.baseURL}api/member/exists/email?email=${email}`,
+          {
+            method: 'GET',
+            headers: API.headers,
+          }
+        );
+        const data = await response.json(); // 서버가 { exists: true/false }를 반환한다고 가정
+
+        if (data.exists) {
+          setEmailValid(false);
+          setEmailValidationMessage('이미 사용 중인 이메일입니다.');
+        } else {
+          setEmailValid(true);
+          setEmailValidationMessage('');
+        }
+      } catch (error) {
+        setEmailValid(false);
+        setEmailValidationMessage('이메일 확인 중 에러가 발생했습니다.');
+        console.error('Failed to check email duplication:', error);
+      }
+    }, 500); // API 호출을 500밀리초 지연시킵니다.
+
+    setEmailTimeout(newTimeout);
+  };
 
   const handleRegister = async () => {
     try {
@@ -154,7 +190,7 @@ function Signup() {
       const data = await response.json(); // Parse JSON body of the response
       console.log(data);
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         alert('회원가입이 완료되었습니다.');
         navigate('/');
       } else {
@@ -176,7 +212,10 @@ function Signup() {
           <PWfield
             placeholder="이메일 ex) abc123@naver.com"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              checkEmailDuplication(e.target.value);
+            }}
           />
           <Message></Message>
         </FieldWithMessage>

@@ -4,6 +4,7 @@ import Bugi from '../images/Bugi.png';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import API from '../API/api';
 
 export const PContainer = styled.div`
   margin-top: 22px;
@@ -101,15 +102,11 @@ function LoginMain() {
     navigate('/Change');
   };
 
-
   const Withdraw = async () => {
     try {
-      const response = await fetch(
-        `${API.baseURL}/api/member/${userId}`,
-        {
-          method: 'DELETE',
-        }
-      );
+      const response = await fetch(`${API.baseURL}/api/member/${userId}`, {
+        method: 'DELETE',
+      });
 
       if (!response.ok) {
         throw new Error('회원탈퇴 요청 실패');
