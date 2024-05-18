@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import API from '../API/api';
 
 const AllContainer = styled.div`
   display: flex;
@@ -131,50 +132,72 @@ const Message = styled.p`
 
 function Signup() {
   const [email, setEmail] = useState('');
+
+  const [emailTimeout, setEmailTimeout] = useState(null);
+  const [emailValid, setEmailValid] = useState(true);
+  const [emailValidationMessage, setEmailValidationMessage] = useState('');
+
   const [userId, setUserId] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
-  // 페이지 이동을 위한 navigate 함수
   const navigate = useNavigate();
 
-  // 회원가입을 처리하는 비동기 함수를 선언합니다.
+  const checkEmailDuplication = (email) => {
+    if (emailTimeout) clearTimeout(emailTimeout); // 이전 타임아웃을 클리어합니다.
+
+    const newTimeout = setTimeout(async () => {
+      try {
+        const response = await fetch(
+          `${API.baseURL}api/member/exists/email?email=${email}`,
+          {
+            method: 'GET',
+            headers: API.headers,
+          }
+        );
+        const data = await response.json(); // 서버가 { exists: true/false }를 반환한다고 가정
+
+        if (data.exists) {
+          setEmailValid(false);
+          setEmailValidationMessage('이미 사용 중인 이메일입니다.');
+        } else {
+          setEmailValid(true);
+          setEmailValidationMessage('');
+        }
+      } catch (error) {
+        setEmailValid(false);
+        setEmailValidationMessage('이메일 확인 중 에러가 발생했습니다.');
+        console.error('Failed to check email duplication:', error);
+      }
+    }, 500); // API 호출을 500밀리초 지연시킵니다.
+
+    setEmailTimeout(newTimeout);
+  };
+
   const handleRegister = async () => {
     try {
-      // 서버에 회원가입 정보를 보내는 HTTP POST 요청을 보냅니다.
+      const response = await fetch(`${API.baseURL}/api/member/sign-up`, {
+        method: 'POST',
+        headers: API.headers,
+        body: JSON.stringify({
+          email: email,
+          userId: userId,
+          phone: phone,
+          password: password,
+        }),
+      });
+      const data = await response.json(); // Parse JSON body of the response
+      console.log(data);
 
-      const response = await fetch(
-        'http://52.78.139.114:8081/api/member/sign-up',
-        {
-          method: 'POST', // HTTP 메소드를 POST로 설정하여 서버에 데이터를 전송합니다.
-          headers: {
-            'Content-Type': 'application/json', // 요청 본문의 형식이 JSON임을 서버에 알립니다.
-          },
-          body: JSON.stringify({
-            email: email, // 사용자의 이메일
-            userId: userId, // 사용자의 아이디
-            phone: phone, // 사용자의 전화번호
-            password: password, // 사용자의 비밀번호
-          }), // JavaScript 객체를 JSON 문자열로 변환하여 서버에 전송합니다.
-        }
-      );
-
-      // 요청에 대한 서버의 응답을 로깅합니다.
-      console.log(`Status: ${response.status}`); // 서버로부터 받은 응답의 HTTP 상태 코드를 콘솔에 출력합니다.
-
-      // 서버 응답이 HTTP 201 상태 코드인 경우 (생성됨), 회원가입이 성공적으로 완료되었음을 사용자에게 알립니다.
-      if (response.status === 201) {
-        alert('회원가입이 완료되었습니다.'); // 사용자에게 알림을 띄웁니다.
-        navigate('/'); // 메인 페이지로 이동합니다.
+      if (response.status === 200) {
+        alert('회원가입이 완료되었습니다.');
+        navigate('/');
       } else {
-        // 서버 응답이 201이 아닌 경우, 회원가입에 실패했다는 에러를 발생시킵니다.
-        throw new Error('회원가입에 실패했습니다.');
+        alert('회원가입에 실패했습니다.');
       }
     } catch (error) {
-      // 네트워크 오류 또는 서버 응답 처리 중 에러가 발생한 경우, 오류 정보를 콘솔에 로깅하고 사용자에게 알립니다.
-      console.error('Registration error:', error); // 콘솔에 오류 정보를 출력합니다.
-      alert('회원가입에 실패하였습니다.'); // 사용자에게 오류 알림을 띄웁니다.
+      alert('에러가 났습니다.');
     }
   };
 
@@ -189,7 +212,10 @@ function Signup() {
           <PWfield
             placeholder="이메일 ex) abc123@naver.com"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              checkEmailDuplication(e.target.value);
+            }}
           />
           <Message></Message>
         </FieldWithMessage>

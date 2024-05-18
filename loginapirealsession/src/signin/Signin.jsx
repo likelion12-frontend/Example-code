@@ -7,6 +7,7 @@ import { MainLine } from '../main/main';
 import Bugi from '../images/Bugi.png';
 import { ImgContainer } from '../main/main';
 import { useEffect } from 'react';
+import API from '../API/api';
 
 const AllContainer = styled.div`
   display: flex;
@@ -65,29 +66,26 @@ function Signin() {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8080/api/member/login', {
+      const response = await fetch(`${API.baseURL}/api/member/login`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: API.headers,
         body: JSON.stringify({
           userId: userId,
           password: password,
         }),
       });
-
-      console.log(`Status: ${response.status}`);
+      const data = await response.json(); // Parse JSON body of the response
+      console.log(data);
 
       if (response.status === 200) {
         alert('로그인이 완료되었습니다.');
         sessionStorage.setItem('userId', userId);
         navigate('/LoginMain');
       } else {
-        throw new Error('회원가입에 실패했습니다.');
+        alert('로그인에 실패했습니다.');
       }
     } catch (error) {
-      console.error('Registration error:', error);
-      alert('로그인에 실패하였습니다.');
+      alert('에러가 났습니다.');
     }
   };
 
