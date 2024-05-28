@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import API from '../API/api';
 
 const AllContainer = styled.div`
   display: flex;
@@ -151,7 +152,7 @@ function Signup() {
 
   const handleRegister = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8080/api/member/sign-up', {
+      const response = await fetch(`${API.baseURL}/api/member/sign-up`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -258,13 +259,13 @@ function Signup() {
 
   async function checkAvailability(type, value) {
     const endpoints = {
-      email: `http://127.0.0.1:8080/api/member/exists/email?email=${encodeURIComponent(
+      email: `${API.baseURL}/api/member/exists/email?email=${encodeURIComponent(
         value
       )}`,
-      userId: `http://127.0.0.1:8080/api/member/exists/userId?userId=${encodeURIComponent(
-        value
-      )}`,
-      tell: `http://127.0.0.1:8080/api/member/exists/phone?phone=${encodeURIComponent(
+      userId: `${
+        API.baseURL
+      }/api/member/exists/userId?userId=${encodeURIComponent(value)}`,
+      tell: `${API.baseURL}/api/member/exists/phone?phone=${encodeURIComponent(
         value
       )}`,
     };

@@ -7,6 +7,7 @@ import { MainLine } from '../main/main';
 import Bugi from '../images/Bugi.png';
 import { ImgContainer } from '../main/main';
 import { useEffect } from 'react';
+import API from '../API/api';
 
 const AllContainer = styled.div`
   display: flex;
@@ -73,7 +74,7 @@ function Signin() {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8080/api/member/login', {
+      const response = await fetch(`${API.baseURL}/api/member/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

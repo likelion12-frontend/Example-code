@@ -4,6 +4,7 @@ import Main, { PContainer } from '../main/main';
 import { MainP } from '../main/main';
 import { MainLine } from '../main/main';
 import { useNavigate } from 'react-router-dom';
+import API from '../API/api';
 
 const AllContainer = styled.div`
   display: flex;
@@ -92,9 +93,9 @@ function Change() {
       const userId = sessionStorage.getItem('userId');
       try {
         const response = await fetch(
-          `http://127.0.0.1:8080/api/member/default-information?userId=${encodeURIComponent(
-            userId
-          )}`
+          `${
+            API.baseURL
+          }/api/member/default-information?userId=${encodeURIComponent(userId)}`
         );
         const data = await response.json();
         if (response.status === 200) {
@@ -119,20 +120,17 @@ function Change() {
 
   const handleRegisterClick = async () => {
     try {
-      const response = await fetch(
-        'http://127.0.0.1:8080/api/member/password',
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            userId: userInfo.userId,
-            pw1: userInfo.password,
-            pw2: userInfo.confirmPassword,
-          }),
-        }
-      );
+      const response = await fetch(`${API.baseURL}/api/member/password`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: userInfo.userId,
+          pw1: userInfo.password,
+          pw2: userInfo.confirmPassword,
+        }),
+      });
 
       if (!response.ok) {
         throw new Error('비밀번호 변경 요청 실패');
@@ -183,19 +181,16 @@ function Change() {
       return;
     }
     try {
-      const response = await fetch(
-        'http://127.0.0.1:8080/api/member/check-password',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            userId: userInfo.userId,
-            pw: password,
-          }),
-        }
-      );
+      const response = await fetch(`${API.baseURL}/api/member/check-password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: userInfo.userId,
+          pw: password,
+        }),
+      });
       const data = await response.json();
       if (response.status === 200) {
         setPasswordMessage('사용 가능한 비밀번호입니다.');
